@@ -1,0 +1,10 @@
+with-expecter: true
+packages:
+  github.com/acsauk/octopus-kafka/internal/octopus:
+    config:
+      dir: "{{.InterfaceDir}}"
+
+    interfaces:
+      Doer:
+        config:
+          inpackage: true
