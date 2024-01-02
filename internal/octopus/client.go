@@ -31,7 +31,7 @@ func New(apiKey, baseURL string, doer Doer) *Client {
 
 func (c *Client) ElectricityMeterPoints(mpan string) (MeterPoint, error) {
 	req, err := http.NewRequest(http.MethodGet,
-		c.baseURL+"/v1/electricity-meter-points/"+mpan+"/",
+		c.baseURL+"/electricity-meter-points/"+mpan+"/",
 		nil,
 	)
 	if err != nil {
