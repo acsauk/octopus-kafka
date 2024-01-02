@@ -29,17 +29,26 @@ func New(apiKey, baseURL string, doer Doer) *Client {
 	}
 }
 
-func (c *Client) ElectricityMeterPoints(mpan string) MeterPoint {
-	req, _ := http.NewRequest(http.MethodGet,
+func (c *Client) ElectricityMeterPoints(mpan string) (MeterPoint, error) {
+	req, err := http.NewRequest(http.MethodGet,
 		c.baseURL+"/v1/electricity-meter-points/"+mpan+"/",
 		nil,
 	)
+	if err != nil {
+		return MeterPoint{}, err
+	}
+
 	req.Header.Set("Authorization", "Basic: "+base64.StdEncoding.EncodeToString([]byte(c.apiKey)))
 
-	resp, _ := c.doer.Do(req)
+	resp, err := c.doer.Do(req)
+	if err != nil {
+		return MeterPoint{}, err
+	}
 
 	var meterPoint MeterPoint
-	_ = json.NewDecoder(resp.Body).Decode(&meterPoint)
+	if err = json.NewDecoder(resp.Body).Decode(&meterPoint); err != nil {
+		return MeterPoint{}, err
+	}
 
-	return meterPoint
+	return meterPoint, nil
 }
