@@ -30,4 +30,11 @@ func main() {
 	fmt.Printf("GSP is %v\n", mp.GSP)
 	fmt.Printf("MPAN is %v\n", mp.MPAN)
 	fmt.Printf("ProfileClass is %v\n", mp.ProfileClass)
+
+	account, err := client.Account("A-93DD6C62")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Printf("%v\n", account)
 }
